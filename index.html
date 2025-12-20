@@ -113,6 +113,7 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
+            background-color: #eee;
         }
 
         .card-body {
@@ -152,6 +153,7 @@
             width: 100%;
             height: 400px;
             object-fit: cover;
+            background-color: #eee;
         }
 
         .modal-body {
@@ -175,6 +177,9 @@
             border-radius: 15px;
             border-left: 8px solid var(--herb-green);
         }
+        
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 8px; }
     </style>
 </head>
 <body>
@@ -200,22 +205,54 @@
         <div class="info-panel">
             <h2>Pantry Essentials</h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
-        	<div><h3> Rice and Grains</h3><ul><li> Jasmine rice for quick cooking </li><li> Buckwheat grouts </li><li> dried peeled mung beans </li><li> dried or canned beans </li>
-		</ul></div>       
-		 <div><h3>Liquids</h3><ul><li>Olive Oil</li><li>Bone Broth</li><li>Coconut Cream</li><li>Canned Tomatoes & Tomato Sauce </li></ul></div>
-                <div><h3>Spices</h3><ul><li>Cumin</li><li>Chili Powder</li><li>Thyme,Rosemary,Summer Savory, & Oregano</li><li>Your favority herb/spice blend</li></ul></div>
-		<div><h3>Miscellaneous</h3><ul><li>Almond Flour</li><li>Apple Cider Vinegar</li><li>Garlic & Onions</li></ul></div>
-
+                <div>
+                    <h3>Rice and Grains</h3>
+                    <ul>
+                        <li>Jasmine rice for quick cooking</li>
+                        <li>Buckwheat groats</li>
+                        <li>Dried peeled mung beans</li>
+                        <li>Dried or canned beans</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Liquids</h3>
+                    <ul>
+                        <li>Olive Oil</li>
+                        <li>Bone Broth</li>
+                        <li>Coconut Cream</li>
+                        <li>Canned Tomatoes & Tomato Sauce</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Spices</h3>
+                    <ul>
+                        <li>Cumin</li>
+                        <li>Chili Powder</li>
+                        <li>Thyme, Rosemary, Summer Savory, & Oregano</li>
+                        <li>Your favorite herb/spice blend</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Miscellaneous</h3>
+                    <ul>
+                        <li>Almond Flour</li>
+                        <li>Apple Cider Vinegar</li>
+                        <li>Garlic & Onions</li>
+                    </ul>
+                </div>
             </div>
         </div>
-
     </section>
 
     <section id="reheat" class="section">
         <div class="info-panel">
-            <h2>Reheating Instructions</h2>
-            <p><strong>Soups:</strong> Add 1/2 cup of broth to a sauce pan and add the frozen soup. Reheat slowly over medium heat.</p>
-            <p><strong>Meatloaf/Bites:</strong> Place frozen cube in a small baking dish with 1 tbsp water. Cover and bake at 350°F for 20 mins.</p>
+            <h2>Reheating with Love</h2>
+            <p>For the best experience, follow these gentle reheating methods:</p>
+            <ul>
+                <li><strong>Soups & Chili:</strong> Add 1/2 cup broth to a sauce pan and add the frozen cube. Reheat slowly over medium heat.</li>
+                <li><strong>Meatloaf & Hash:</strong> Place in an oven-safe dish. Add 1 tbsp water, cover, and bake at 350°F until warmed through.</li>
+                <li><strong>Grains & Sides:</strong> Add 1-2 tbsp of water or broth, cover tightly, and microwave for 2-3 minutes to steam.</li>
+            </ul>
         </div>
     </section>
 </div>
@@ -225,7 +262,6 @@
 </div>
 
 <script>
-    // This is the key: raw.githubusercontent.com allows images to load directly
     const githubBase = "https://raw.githubusercontent.com/mbmissenda/Nourishing_Gift/main/";
 
     const recipes = [
@@ -248,12 +284,13 @@
 
     function initGrid() {
         const grid = document.getElementById('recipeGrid');
+        grid.innerHTML = '';
         recipes.forEach((r, i) => {
             const card = document.createElement('div');
             card.className = 'card';
             card.onclick = () => showRecipe(i);
             card.innerHTML = `
-                <img src="${githubBase + r.img}" class="card-img" alt="${r.title}">
+                <img src="${githubBase + r.img}" class="card-img" alt="${r.title}" onerror="this.src='https://via.placeholder.com/400x200?text=Image+Not+Found'">
                 <div class="card-body">
                     <span class="tag">${r.size}</span>
                     <h3 style="margin: 10px 0;">${r.title}</h3>
@@ -269,7 +306,7 @@
         const modal = document.getElementById('recipeModal');
         document.getElementById('modalBody').innerHTML = `
             <span class="close" onclick="closeModal()">&times;</span>
-            <img src="${githubBase + r.img}" class="modal-header-img">
+            <img src="${githubBase + r.img}" class="modal-header-img" onerror="this.src='https://via.placeholder.com/800x400?text=Image+Not+Found'">
             <div class="modal-body">
                 <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem; color: var(--deep-sage);">${r.title}</h2>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem;">
