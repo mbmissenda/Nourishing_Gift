@@ -236,7 +236,7 @@
                     <h3>Miscellaneous</h3>
                     <ul>
                         <li>Almond Flour</li>
-                        <li>Apple Cider Vinegar</li>
+                         <li>Apple Cider Vinegar</li>
                         <li>Garlic & Onions</li>
                     </ul>
                 </div>
@@ -377,3 +377,107 @@
 
 </body>
 </html>
+<script>
+  const fallbackDish = "https://via.placeholder.com/800x400?text=No+Image";
+  const fallbackSide = "https://via.placeholder.com/800x400?text=Side+Dish";
+
+  const recipes = [
+    { title: "Grain-Free Meatloaf Bites", size: "1-Cup", img: "Meatloaf bites.png", shopping: ["1 lb Ground Beef", "1 Egg", "1/2 cup Almond Flour", "1/4 cup Tomato Paste"], steps: ["Mix all ingredients.", "Bake at 375°F until 160°F internal.", "Cool and freeze in 1-cup portions."], tips: "Moist and grain-free." },
+    { title: "Butternut Squash Soup", size: "1-Cup", img: "Butternut Squash Soup.png", shopping: ["Butternut Squash", "Coconut Cream", "Ginger", "Sausage"], steps: ["Boil squash in broth.", "Blend with ginger and cream.", "Add cooked sausage."], tips: "Perfectly creamy." },
+    { title: "Ham & White Bean Soup", size: "1-Cup", img: "Ham and White Bean Soup.png", shopping: ["Ham", "Navy Beans", "Ham Hock", "Carrots"], steps: ["Simmer hock for flavor.", "Add beans and ham.", "Freeze in 1-cup portions."], tips: "Smoky and filling." },
+    { title: "Roasted Turkey & Stuffing", size: "1-Cup", img: "Roasted Turkey and Sage Stuffing.png", shopping: ["Turkey", "Sage Stuffing", "Extra Gravy"], steps: ["Layer stuffing and turkey.", "Drown in extra gravy.", "Freeze tightly."], tips: "Holiday comfort anytime." },
+    { title: "German Potato Soup", size: "1-Cup", img: "German Potato Leek Soup.png", shopping: ["Potatoes", "Leeks", "Bacon", "Broth"], steps: ["Boil potatoes and leeks.", "Puree.", "Top with bacon."], tips: "Kartoffelsuppe style." },
+    { title: "Chicken Tinga", size: "1-Cup", img: "Chicken TInga.png", shopping: ["Chicken", "Chipotles", "Tomato", "Onion"], steps: ["Sauté onions.", "Simmer with chipotles and tomato.", "Add shredded chicken."], tips: "Smoky and spicy." },
+    { title: "Sweet Potato & Sausage Hash", size: "1-Cup", img: "Sweet Potato and Sausage Hash.png", shopping: ["Sweet Potatoes", "Sausage", "Bell Peppers"], steps: ["Brown sausage.", "Sauté with potato cubes.", "Freeze."], tips: "Great for breakfast." },
+    { title: "Shepherd's Pie", size: "1-Cup", img: "Shephard Pie.png", shopping: ["Lamb or Beef", "Sweet Potato", "Veggies"], steps: ["Layer meat on bottom.", "Top with sweet potato mash.", "Freeze."], tips: "A complete meal in a cup." },
+    { title: "Meatball Soup", size: "1-Cup", img: "Meatball Soup.png", shopping: ["Meatballs", "Kale", "Bone Broth", "Herbs"], steps: ["Simmer broth with herbs.", "Add meatballs and kale.", "Freeze."], tips: "Herby and nourishing." },
+    { title: "Beef Chili", size: "1-Cup", img: "Beef Chili.png", shopping: ["Ground Beef", "Black Beans", "Tomatoes", "Spices"], steps: ["Brown beef.", "Simmer with beans and spices.", "Freeze."], tips: "Classic comfort." },
+
+    { title: "Refried Black Beans", size: "1/2-Cup Side", shopping: ["2 cans Black Beans", "Onion & Garlic", "Olive Oil"], steps: ["Sauté onion/garlic.", "Mash beans with a splash of liquid.", "Portion into 1/2 cup trays."], tips: "Vegan and high in fiber." },
+    { title: "Smashed Potatoes", size: "1/2-Cup Side", shopping: ["Potatoes", "Garlic", "Herbs", "Olive Oil"], steps: ["Boil potatoes with garlic.", "Smash with a fork (leave chunky).", "Add herbs and portion."], tips: "Pan-sear the frozen cube for crispy edges." },
+    { title: "Smashed Sweet Potato", size: "1/2-Cup Side", shopping: ["Sweet Potatoes", "Mexican Herb Blend"], steps: ["Boil or roast potatoes.", "Smash with herbs.", "Portion into 1/2 cup trays."], tips: "Pairs perfectly with the Chicken Tinga." },
+    { title: "Cooked Rice", size: "1/2-Cup Side", shopping: ["Rice", "Olive Oil", "Salt/Pepper"], steps: ["Cook rice as directed.", "Fluff with olive oil and seasoning.", "Pack into trays."], tips: "Steam with a lid to keep it fluffy." },
+    { title: "Modern Green Bean Casserole", size: "1/2-Cup Side", shopping: ["Green Beans", "Mushroom Gravy", "Fried Onions"], steps: ["Mix beans and gravy.", "Portion into trays.", "Freeze (keep onions separate until serving)."], tips: "Add fried onions after reheating." },
+    { title: "Mennonite Potato Salad", size: "1/2-Cup Side", shopping: ["Potatoes", "Bacon", "Vinegar", "Sugar/Salt"], steps: ["Boil potatoes.", "Toss with warm bacon-vinegar dressing.", "Portion and freeze."], tips: "Best served warm." },
+    { title: "Buffalo Chicken Shreds", size: "1/2-Cup Side", shopping: ["Shredded Chicken", "Buffalo Sauce", "Butter"], steps: ["Toss chicken with sauce and butter.", "Portion into 1/2 cup trays.", "Freeze."], tips: "Use as a topping for salad or baked potatoes." }
+  ];
+
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function getImgSrc(r) {
+    return r.img ? encodeURI(r.img) : fallbackSide;
+  }
+
+  function initGrid() {
+    const grid = document.getElementById('recipeGrid');
+    grid.innerHTML = '';
+
+    recipes.forEach((r, i) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.onclick = () => showRecipe(i);
+
+      const src = getImgSrc(r);
+
+      card.innerHTML = `
+        <img src="${src}"
+             class="card-img"
+             alt="${r.title}"
+             onerror="this.onerror=null; this.src='${r.img ? fallbackDish : fallbackSide}'">
+        <div class="card-body">
+          <span class="tag">${r.size}</span>
+          <h3 style="margin: 10px 0;">${r.title}</h3>
+          <p style="color: var(--muted-teal); font-size: 0.9rem;">View Recipe &rarr;</p>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function showRecipe(i) {
+    const r = recipes[i];
+    const modal = document.getElementById('recipeModal');
+    const src = getImgSrc(r);
+
+    document.getElementById('modalBody').innerHTML = `
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img src="${src}"
+           class="modal-header-img"
+           alt="${r.title}"
+           onerror="this.onerror=null; this.src='${r.img ? fallbackDish : fallbackSide}'">
+      <div class="modal-body">
+        <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem; color: var(--deep-sage);">${r.title}</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem;">
+          <div>
+            <h3>Shopping List</h3>
+            <ul>${r.shopping.map(item => `<li>${item}</li>`).join('')}</ul>
+          </div>
+          <div>
+            <h3>Instructions</h3>
+            <ol>${r.steps.map(step => `<li>${step}</li>`).join('')}</ol>
+            <p><strong>Note:</strong> ${r.tips}</p>
+          </div>
+        </div>
+      </div>
+    `;
+    modal.style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById('recipeModal').style.display = "none";
+  }
+
+  window.onclick = (e) => {
+    if (e.target === document.getElementById('recipeModal')) closeModal();
+  };
+
+  initGrid();
+</script>
+
+
+</body>
+</html>
+
