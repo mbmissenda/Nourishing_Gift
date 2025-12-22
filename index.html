@@ -263,9 +263,10 @@
 
 <script>
     const githubBase = "https://raw.githubusercontent.com/mbmissenda/Nourishing_Gift/main/";
+  
 
-    const recipes = [
-        { title: "Grain-Free Meatloaf Bites", size: "1-Cup", img: "Meatloaf%20bites.png", shopping: ["1 lb Ground Beef", "1 Egg", "1/2 cup Almond Flour", "1/4 cup Tomato Paste"], steps: ["Mix all ingredients.", "Bake at 375°F until 160°F internal.", "Cool and freeze in 1-cup portions."], tips: "Moist and grain-free." },
+ const recipes = [
+ { title: "Grain-Free Meatloaf Bites", size: "1-Cup", img: "Meatloaf%20bites.png", shopping: ["1 lb Ground Beef", "1 Egg", "1/2 cup Almond Flour", "1/4 cup Tomato Paste"], steps: ["Mix all ingredients.", "Bake at 375°F until 160°F internal.", "Cool and freeze in 1-cup portions."], tips: "Moist and grain-free." },
         { title: "Butternut Squash Soup", size: "1-Cup", img: "Butternut%20Squash%20Soup.png", shopping: ["Butternut Squash", "Coconut Cream", "Ginger", "Sausage"], steps: ["Boil squash in broth.", "Blend with ginger and cream.", "Add cooked sausage."], tips: "Perfectly creamy." },
         { title: "Ham & White Bean Soup", size: "1-Cup", img: "Ham%20and%20White%20Bean%20Soup.png", shopping: ["Ham", "Navy Beans", "Ham Hock", "Carrots"], steps: ["Simmer hock for flavor.", "Add beans and ham.", "Freeze in 1-cup portions."], tips: "Smoky and filling." },
         { title: "Roasted Turkey & Stuffing", size: "1-Cup", img: "Roasted%20Turkey%20and%20Sage%20Stuffing.png", shopping: ["Turkey", "Sage Stuffing", "Extra Gravy"], steps: ["Layer stuffing and turkey.", "Drown in extra gravy.", "Freeze tightly."], tips: "Holiday comfort anytime." },
@@ -274,8 +275,18 @@
         { title: "Sweet Potato & Sausage Hash", size: "1-Cup", img: "Sweet%20Potato%20and%20Sausage%20Hash.png", shopping: ["Sweet Potatoes", "Sausage", "Bell Peppers"], steps: ["Brown sausage.", "Sauté with potato cubes.", "Freeze."], tips: "Great for breakfast." },
         { title: "Shepherd's Pie", size: "1-Cup", img: "Shephard%20Pie.png", shopping: ["Lamb or Beef", "Sweet Potato", "Veggies"], steps: ["Layer meat on bottom.", "Top with sweet potato mash.", "Freeze."], tips: "A complete meal in a cup." },
         { title: "Meatball Soup", size: "1-Cup", img: "Meatball%20Soup.png", shopping: ["Meatballs", "Kale", "Bone Broth", "Herbs"], steps: ["Simmer broth with herbs.", "Add meatballs and kale.", "Freeze."], tips: "Herby and nourishing." },
-        { title: "Beef Chili", size: "1-Cup", img: "Beef%20Chili.png", shopping: ["Ground Beef", "Black Beans", "Tomatoes", "Spices"], steps: ["Brown beef.", "Simmer with beans and spices.", "Freeze."], tips: "Classic comfort." }
+        { title: "Beef Chili", size: "1-Cup", img: "Beef%20Chili.png", shopping: ["Ground Beef", "Black Beans", "Tomatoes", "Spices"], steps: ["Brown beef.", "Simmer with beans and spices.", "Freeze."], tips: "Classic comfort." },
+
+        { title: "Refried Black Beans", size: "1/2-Cup Side", shopping: ["2 cans Black Beans", "Onion & Garlic", "Olive Oil"], steps: ["Sauté onion/garlic.", "Mash beans with a splash of liquid.", "Portion into 1/2 cup trays."], tips: "Vegan and high in fiber." },
+        { title: "Smashed Potatoes", size: "1/2-Cup Side", shopping: ["Potatoes", "Garlic", "Herbs", "Olive Oil"], steps: ["Boil potatoes with garlic.", "Smash with a fork (leave chunky).", "Add herbs and portion."], tips: "Pan-sear the frozen cube for crispy edges." },
+        { title: "Smashed Sweet Potato", size: "1/2-Cup Side", shopping: ["Sweet Potatoes", "Mexican Herb Blend"], steps: ["Boil or roast potatoes.", "Smash with herbs.", "Portion into 1/2 cup trays."], tips: "Pairs perfectly with the Chicken Tinga." },
+        { title: "Cooked Rice", size: "1/2-Cup Side", shopping: ["Rice", "Olive Oil", "Salt/Pepper"], steps: ["Cook rice as directed.", "Fluff with olive oil and seasoning.", "Pack into trays."], tips: "Steam with a lid to keep it fluffy." },
+        { title: "Modern Green Bean Casserole", size: "1/2-Cup Side", shopping: ["Green Beans", "Mushroom Gravy", "Fried Onions"], steps: ["Mix beans and gravy.", "Portion into trays.", "Freeze (keep onions separate until serving)."], tips: "Add fried onions after reheating." },
+        { title: "Mennonite Potato Salad", size: "1/2-Cup Side", shopping: ["Potatoes", "Bacon", "Vinegar", "Sugar/Salt"], steps: ["Boil potatoes.", "Toss with warm bacon-vinegar dressing.", "Portion and freeze."], tips: "Best served warm." },
+        { title: "Buffalo Chicken Shreds", size: "1/2-Cup Side", shopping: ["Shredded Chicken", "Buffalo Sauce", "Butter"], steps: ["Toss chicken with sauce and butter.", "Portion into 1/2 cup trays.", "Freeze."], tips: "Use as a topping for salad or baked potatoes." }
     ];
+
+
 
     function showSection(id) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
