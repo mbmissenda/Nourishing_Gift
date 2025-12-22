@@ -294,52 +294,86 @@
     }
 
     function initGrid() {
-        const grid = document.getElementById('recipeGrid');
-        grid.innerHTML = '';
-        recipes.forEach((r, i) => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.onclick = () => showRecipe(i);
-            card.innerHTML = `
-const src = r.img ? (githubBase + r.img) : "https://via.placeholder.com/400x200?text=Side+Dish";
-...
-<img src="${src}" class="card-img" alt="${r.title}" onerror="this.src='https://via.placeholder.com/400x200?text=Image+Not+Found'">
-              
-                <div class="card-body">
-                    <span class="tag">${r.size}</span>
-                    <h3 style="margin: 10px 0;">${r.title}</h3>
-                    <p style="color: var(--muted-teal); font-size: 0.9rem;">View Recipe &rarr;</p>
-                </div>
-            `;
-            grid.appendChild(card);
-        });
-    }
+ <script>
+  const githubBase = "https://raw.githubusercontent.com/mbmissenda/Nourishing_Gift/main/";
+  const fallbackDish = "https://via.placeholder.com/800x400?text=No+Image";
+  const fallbackSide = "https://via.placeholder.com/800x400?text=Side+Dish";
 
-    function showRecipe(i) {
-        const r = recipes[i];
-        const modal = document.getElementById('recipeModal');
-        document.getElementById('modalBody').innerHTML = `
-            <span class="close" onclick="closeModal()">&times;</span>
-const src = r.img ? (githubBase + r.img) : "https://via.placeholder.com/400x200?text=Side+Dish";
-...
-<img src="${src}" class="card-img" alt="${r.title}" onerror="this.src='https://via.placeholder.com/400x200?text=Image+Not+Found'">
-           
-            <div class="modal-body">
-                <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem; color: var(--deep-sage);">${r.title}</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem;">
-                    <div><h3>Shopping List</h3><ul>${r.shopping.map(item => `<li>${item}</li>`).join('')}</ul></div>
-                    <div><h3>Instructions</h3><ol>${r.steps.map(step => `<li>${step}</li>`).join('')}</ol>
-                    <p><strong>Note:</strong> ${r.tips}</p></div>
-                </div>
-            </div>
-        `;
-        modal.style.display = "block";
-    }
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
 
-    function closeModal() { document.getElementById('recipeModal').style.display = "none"; }
-    window.onclick = (e) => { if(e.target == document.getElementById('recipeModal')) closeModal(); }
-    initGrid();
+  function getImgSrc(r) {
+    return r.img ? (githubBase + r.img) : fallbackSide;
+  }
+
+  function initGrid() {
+    const grid = document.getElementById('recipeGrid');
+    grid.innerHTML = '';
+
+    recipes.forEach((r, i) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.onclick = () => showRecipe(i);
+
+      const src = getImgSrc(r);
+
+      card.innerHTML = `
+        <img src="${src}"
+             class="card-img"
+             alt="${r.title}"
+             onerror="this.onerror=null; this.src='${r.img ? fallbackDish : fallbackSide}'">
+        <div class="card-body">
+          <span class="tag">${r.size}</span>
+          <h3 style="margin: 10px 0;">${r.title}</h3>
+          <p style="color: var(--muted-teal); font-size: 0.9rem;">View Recipe &rarr;</p>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function showRecipe(i) {
+    const r = recipes[i];
+    const modal = document.getElementById('recipeModal');
+    const src = getImgSrc(r);
+
+    document.getElementById('modalBody').innerHTML = `
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img src="${src}"
+           class="modal-header-img"
+           alt="${r.title}"
+           onerror="this.onerror=null; this.src='${r.img ? fallbackDish : fallbackSide}'">
+      <div class="modal-body">
+        <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem; color: var(--deep-sage);">${r.title}</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem;">
+          <div>
+            <h3>Shopping List</h3>
+            <ul>${r.shopping.map(item => `<li>${item}</li>`).join('')}</ul>
+          </div>
+          <div>
+            <h3>Instructions</h3>
+            <ol>${r.steps.map(step => `<li>${step}</li>`).join('')}</ol>
+            <p><strong>Note:</strong> ${r.tips}</p>
+          </div>
+        </div>
+      </div>
+    `;
+    modal.style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById('recipeModal').style.display = "none";
+  }
+
+  window.onclick = (e) => {
+    if (e.target === document.getElementById('recipeModal')) closeModal();
+  };
+
+  initGrid();
 </script>
+
 
 </body>
 </html>
