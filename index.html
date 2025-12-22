@@ -301,7 +301,10 @@
             card.className = 'card';
             card.onclick = () => showRecipe(i);
             card.innerHTML = `
-                <img src="${githubBase + r.img}" class="card-img" alt="${r.title}" onerror="this.src='https://via.placeholder.com/400x200?text=Image+Not+Found'">
+const src = r.img ? (githubBase + r.img) : "https://via.placeholder.com/400x200?text=Side+Dish";
+...
+<img src="${src}" class="card-img" alt="${r.title}" onerror="this.src='https://via.placeholder.com/400x200?text=Image+Not+Found'">
+              
                 <div class="card-body">
                     <span class="tag">${r.size}</span>
                     <h3 style="margin: 10px 0;">${r.title}</h3>
@@ -317,7 +320,10 @@
         const modal = document.getElementById('recipeModal');
         document.getElementById('modalBody').innerHTML = `
             <span class="close" onclick="closeModal()">&times;</span>
-            <img src="${githubBase + r.img}" class="modal-header-img" onerror="this.src='https://via.placeholder.com/800x400?text=Image+Not+Found'">
+const src = r.img ? (githubBase + r.img) : "https://via.placeholder.com/400x200?text=Side+Dish";
+...
+<img src="${src}" class="card-img" alt="${r.title}" onerror="this.src='https://via.placeholder.com/400x200?text=Image+Not+Found'">
+           
             <div class="modal-body">
                 <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem; color: var(--deep-sage);">${r.title}</h2>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem;">
