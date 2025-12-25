@@ -483,10 +483,272 @@
 
 </body>
 </html>
+<div id="recipeModal">
+    <div class="modal-content" id="modalBody"></div>
+</div>
+
+<script>
+    const githubBase = "https://raw.githubusercontent.com/mbmissenda/Nourishing_Gift/main/";
+    const fallbackDish = "https://via.placeholder.com/800x400?text=No+Image";
+    const fallbackSide = "https://via.placeholder.com/800x400?text=Side+Dish";
+
+    const recipes = [
+        {
+            title: "Haitian Joumou-Style Beef & Rigatoni",
+            size: "1-Cup",
+            img: "Joumou Rigatoni.png",
+            shopping: [
+                "1/2 lb beef chuck in small cubes",
+                "Epis (Haitian Seasoning Base): 2 tbsp (scallions, garlic, bell peppers, parsley, lime)",
+                "1 lb peeled and cubed kabocha squash (or calabaza)",
+                "3 cups beef broth",
+                "1.5 cups dry rigatoni",
+                "1/2 cup shredded cabbage",
+                "1/4 cup carrots",
+                "1/4 cup celery",
+                "1 sprig of thyme",
+                "1 tbsp butter",
+                "Favorite hot pepper to taste",
+                "1 tsp lime juice"
+            ],
+            steps: [
+                "Toss the beef cubes with epis and salt. Let sit for 15 minutes while you boil the kabocha squash in the broth.",
+                "Sear the beef in oil over medium-high heat.",
+                "When the squash is soft, mash or blend until smooth.",
+                "Add the beef and remaining ingredients to the squash and gently simmer for 10 minutes.",
+                "Add the dry rigatoni and cook until very al dente (slightly firm). It will finish cooking when reheated.",
+                "Stir in the butter and lime juice, cool, and fill the silicone containers to freeze."
+            ],
+            tips: "Reheat from frozen in the microwave for 4-5 minutes, stirring halfway through."
+        },
+        {
+            title: "Grain-Free Meatloaf Bites",
+            size: "1-Cup",
+            img: "Meatloaf bites.png",
+            shopping: [
+                "1 lb ground beef",
+                "1 egg",
+                "1/2 cup gluten-free breadcrumbs",
+                "1/4 cup tomato paste",
+                "Chopped onions (use frozen)",
+                "1 teaspoon gluten-free Worcestershire sauce",
+                "Salt & pepper"
+            ],
+            steps: [
+                "Mix all ingredients.",
+                "Bake at 375°F until 160°F internal.",
+                "Cool and freeze in 1-cup portions."
+            ],
+            tips: "Moist and grain-free."
+        },
+        {
+            title: "Butternut Squash Soup",
+            size: "1-Cup",
+            img: "Butternut Squash Soup.png",
+            shopping: ["Butternut squash", "Coconut cream", "Ginger", "Sausage"],
+            steps: ["Boil squash in broth.", "Blend with ginger and cream.", "Add cooked sausage."],
+            tips: "Perfectly creamy."
+        },
+        {
+            title: "Ham & White Bean Soup",
+            size: "1-Cup",
+            img: "Ham and White Bean Soup.png",
+            shopping: ["Ham", "Navy beans", "Ham hock", "Carrots"],
+            steps: ["Simmer hock for flavor.", "Add beans and ham.", "Freeze in 1-cup portions."],
+            tips: "Smoky and filling."
+        },
+        {
+            title: "Roasted Turkey & Stuffing",
+            size: "1-Cup",
+            img: "Roasted Turkey and Sage Stuffing.png",
+            shopping: ["Turkey", "Sage stuffing", "Extra gravy"],
+            steps: ["Layer stuffing and turkey.", "Drown in extra gravy.", "Freeze tightly."],
+            tips: "Holiday comfort anytime."
+        },
+        {
+            title: "German Potato Soup",
+            size: "1-Cup",
+            img: "German Potato Leek Soup.png",
+            shopping: ["Potatoes", "Leeks", "Bacon", "Broth"],
+            steps: ["Boil potatoes and leeks.", "Puree.", "Top with bacon."],
+            tips: "Kartoffelsuppe style."
+        },
+        {
+            title: "Chicken Tinga",
+            size: "1-Cup",
+            img: "Chicken TInga.png",
+            shopping: ["Chicken", "Chipotles", "Tomato", "Onion"],
+            steps: ["Sauté onions.", "Simmer with chipotles and tomato.", "Add shredded chicken."],
+            tips: "Smoky and spicy."
+        },
+        {
+            title: "Sweet Potato & Sausage Hash",
+            size: "1-Cup",
+            img: "Sweet Potato and Sausage Hash.png",
+            shopping: ["Sweet potatoes", "Sausage", "Bell peppers"],
+            steps: ["Brown sausage.", "Sauté with potato cubes.", "Freeze."],
+            tips: "Great for breakfast."
+        },
+        {
+            title: "Shepherd's Pie",
+            size: "1-Cup",
+            img: "Shephard Pie.png",
+            shopping: ["Lamb or beef", "Sweet potato", "Veggies"],
+            steps: ["Layer meat on bottom.", "Top with sweet potato mash.", "Freeze."],
+            tips: "A complete meal in a cup."
+        },
+        {
+            title: "Meatball Soup",
+            size: "1-Cup",
+            img: "Meatball Soup.png",
+            shopping: ["Meatballs", "Kale", "Bone broth", "Herbs"],
+            steps: ["Simmer broth with herbs.", "Add meatballs and kale.", "Freeze."],
+            tips: "Herby and nourishing."
+        },
+        {
+            title: "Beef Chili",
+            size: "1-Cup",
+            img: "Beef Chili.png",
+            shopping: ["Ground beef", "Black beans", "Tomatoes", "Spices"],
+            steps: ["Brown beef.", "Simmer with beans and spices.", "Freeze."],
+            tips: "Classic comfort."
+        },
+        {
+            title: "Refried Black Beans",
+            size: "1/2-Cup Side",
+            shopping: ["2 cans black beans", "Onion & garlic", "Olive oil"],
+            steps: ["Sauté onion/garlic.", "Mash beans with a splash of liquid.", "Portion into 1/2 cup trays."],
+            tips: "Vegan and high in fiber."
+        },
+        {
+            title: "Smashed Potatoes",
+            size: "1/2-Cup Side",
+            shopping: ["Potatoes", "Garlic", "Herbs", "Olive oil"],
+            steps: ["Boil or roast potatoes and garlic.", "Smash with a fork (leave chunky).", "Add herbs and portion."],
+            tips: "Pan-sear the frozen cube for crispy edges."
+        },
+        {
+            title: "Smashed Sweet Potato",
+            size: "1/2-Cup Side",
+            shopping: ["Sweet potatoes", "Mexican herb blend"],
+            steps: ["Boil or roast potatoes.", "Smash with herbs.", "Portion into 1/2 cup trays."],
+            tips: "Pairs perfectly with the Chicken Tinga."
+        },
+        {
+            title: "Cooked Rice",
+            size: "1/2-Cup Side",
+            shopping: ["Rice", "Olive oil", "Salt/pepper"],
+            steps: [
+                "Cook rice as directed.",
+                "Fluff with olive oil and seasoning. Rapidly cool in a thin layer in the refrigerator.",
+                "Pack into trays within 1 hour of cooking."
+            ],
+            tips: "Steam with a lid to keep it fluffy."
+        },
+        {
+            title: "Modern Green Bean Casserole",
+            size: "1/2-Cup Side",
+            shopping: ["Green beans", "Mushroom gravy", "Fried onions"],
+            steps: ["Mix beans and gravy.", "Portion into trays.", "Freeze (keep onions separate until serving)."],
+            tips: "Add fried onions after reheating."
+        },
+        {
+            title: "Mennonite Potato Salad",
+            size: "1/2-Cup Side",
+            shopping: ["Potatoes", "Bacon", "Vinegar", "Sugar/salt"],
+            steps: ["Boil potatoes.", "Toss with warm bacon-vinegar dressing.", "Portion and freeze."],
+            tips: "Best served warm."
+        },
+        {
+            title: "Buffalo Chicken Shreds",
+            size: "1/2-Cup Side",
+            shopping: ["Shredded chicken", "Buffalo sauce", "Butter"],
+            steps: ["Toss chicken with sauce and butter.", "Portion into 1/2 cup trays.", "Freeze."],
+            tips: "Use as a topping for salad or baked potatoes."
+        }
+    ];
+
+    function showSection(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function getImgSrc(recipe) {
+        if (!recipe.img) {
+            return fallbackSide;
+        }
+
+        return encodeURI(`${githubBase}${recipe.img}`);
+    }
+
+    function initGrid() {
+        const grid = document.getElementById('recipeGrid');
+        grid.innerHTML = '';
+
+        recipes.forEach((recipe, index) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => showRecipe(index);
+
+            const src = getImgSrc(recipe);
+
+            card.innerHTML = `
+        <img src="${src}"
+             class="card-img"
+             alt="${recipe.title}"
+             onerror="this.onerror=null; this.src='${recipe.img ? fallbackDish : fallbackSide}'">
+        <div class="card-body">
+          <span class="tag">${recipe.size}</span>
+          <h3 style="margin: 10px 0;">${recipe.title}</h3>
+          <p style="color: var(--muted-teal); font-size: 0.9rem;">View Recipe &rarr;</p>
+        </div>
+      `;
+            grid.appendChild(card);
+        });
+    }
+
+    function showRecipe(index) {
+        const recipe = recipes[index];
+        const modal = document.getElementById('recipeModal');
+        const src = getImgSrc(recipe);
+
+        document.getElementById('modalBody').innerHTML = `
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img src="${src}"
+           class="modal-header-img"
+           alt="${recipe.title}"
+           onerror="this.onerror=null; this.src='${recipe.img ? fallbackDish : fallbackSide}'">
+      <div class="modal-body">
+        <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem; color: var(--deep-sage);">${recipe.title}</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem;">
+          <div>
+            <h3>Shopping List</h3>
+            <ul>${recipe.shopping.map(item => `<li>${item}</li>`).join('')}</ul>
+          </div>
+          <div>
+            <h3>Instructions</h3>
+            <ol>${recipe.steps.map(step => `<li>${step}</li>`).join('')}</ol>
+            <p><strong>Note:</strong> ${recipe.tips}</p>
+          </div>
+        </div>
+      </div>
+    `;
+        modal.style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById('recipeModal').style.display = "none";
+    }
+
+    window.onclick = (event) => {
+        if (event.target === document.getElementById('recipeModal')) {
+            closeModal();
+        }
+    };
+
+    initGrid();
+</script>
 
 
-
-
-
-
-
+</body>
+</html>
